@@ -1,0 +1,28 @@
+<html>
+<head>
+
+
+    <title>Lost</title>
+</head>
+<body>
+    
+
+    <main class="container">
+            
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            
+            <button>
+                HELP
+            </button>
+
+
+
+        </form>
+
+    </main>
+
+</body>
+
+</html>

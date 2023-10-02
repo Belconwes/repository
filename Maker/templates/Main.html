@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+<head>
+    <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <title> main </title>
+    <Link rel="stylesheet"  href= "{% static 'css/estilos.css' %}">
+
+
+</head>
+
+<body style="background-image: url('{% static 'asets/shota.jpg' %}') ">
+  <nav class="navbar navbar-expand-lg " style="background-color: rgba(42, 218, 100, 0.856);">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">TRUE MAKER</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto" >
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'padre' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Ingreso de productos</a>
+          </li>
+
+
+
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link " href="http://127.0.0.1:8000/logout">Cerrar session</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="http://127.0.0.1:8000/registro">Registrarse/Inicar</a>
+          </li>
+
+
+          {% endif %}
+
+          {% if user.is_superuser %}
+
+          <li class="nav-item">
+            <a class="nav-link " href="http://127.0.0.1:8000/admin">padmin</a>
+          </li>
+
+          {% endif %}
+
+
+         
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div >
+    {% for p in product %}
+      <div class="container-product">
+
+        <div class="producto">
+          {% if p.detail_image %}
+          <img src="{{ p.detail_image.url }}" alt="Image product">
+          {% endif %}
+          <div>
+            <h5>{{p.nombre | capfirst}}</h5>
+          </div>
+  
+
+        </div>
+      
+
+      </div>
+    {% endfor %}
+
+  </div>
+  <div>
+    {% block content %}
+
+    {% endblock %}
+  
+
+  </div>
+  <script rel="stylesheet" src="{% static 'javas/script.js' %}"></script>
+</body>
+
+
+
+</html>
