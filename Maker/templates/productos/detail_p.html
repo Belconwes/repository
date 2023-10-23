@@ -1,0 +1,78 @@
+{% extends 'Main.html'%}
+
+
+    
+
+
+
+{% block content %}
+<head>
+
+    <style>
+        html {
+   --s: 120px; /* control the size */
+   --c1: #4E395D;
+   --c2: #8EBE94;
+  
+   --_g:var(--c1) 15%,var(--c2) 0 28%,#0000 0 72%,var(--c2) 0 85%,var(--c1) 0;
+   background:
+    conic-gradient(from 90deg at 2px 2px,#0000 25%,var(--c1) 0) -1px -1px,
+    linear-gradient(-45deg,var(--_g)),linear-gradient(45deg,var(--_g)),
+    conic-gradient(from 90deg at 40% 40%,var(--c1) 25%,var(--c2) 0) 
+     calc(var(--s)/-5) calc(var(--s)/-5);
+   background-size: var(--s) var(--s);
+}
+    </style>
+</head>
+
+<main class="flex-shrink-0">
+    {% for m in productos %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 order-md-1">
+                <!--Carrusel-->
+                <div id="carouselImages" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <!--Imagenes-->
+                        <div class="carousel-item active">
+                            <img src="{{ m.detail_image.url }}" class="d-block w-100">
+                        </div>
+
+                        
+                        
+                    </div>
+
+                   
+                </div>
+            </div>
+            
+            <div class="col-md-7 order-md-2">
+                <h2>{{m.nombre}}</h2>
+                <input type="hidden" name="token" value="026a8089ff9ce1c296464138aad4080fe96bd25e">
+
+                
+                    <p><del>$ {{m.precio}}</del></p>
+                    <h2>$ {{m.precio}} <small class=" text-success"></small></h2>
+
+                
+                <p class="lead">{{m.descripcion}}</p>
+          
+
+                <div class="col-3 my-3">
+                    <input class="form-control" id="cantidad" name="cantidad" type="number" min="1" max="10" value="1">
+                </div>
+
+                <div class="d-grid gap-3 col-7">
+                    <button class="btn btn-primary" type="button">Comprar ahora</button>
+                    <button class="btn btn-outline-primary" type="button" onclick="addProducto(1, cantidad.value, '026a8089ff9ce1c296464138aad4080fe96bd25e')">Agregar al carrito</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    
+</main>
+{% endblock %}
+
+
+

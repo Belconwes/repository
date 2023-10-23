@@ -5,11 +5,24 @@
     <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <title> main </title>
     <Link rel="stylesheet"  href= "{% static 'css/estilos.css' %}">
+    <link  rel="stylesheet"  href="{% static 'css/register.css' %}" media="all" >
+    <Link rel="stylesheet"  href= "{% static 'css/estilo_p.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pro.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_m.css' %}">
+  
+  <style>
+  
+    .truck{
+      background-image: url(../media/su.png);
+    }
+
+
+  </style>
 
 
 </head>
 
-<body style="background-image: url('{% static 'asets/shota.jpg' %}') ">
+<body class="truck">
   <nav class="navbar navbar-expand-lg " style="background-color: rgba(42, 218, 100, 0.856);">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">TRUE MAKER</a>
@@ -17,13 +30,19 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="BUSCAR PRODUCTOS" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit" >Search</button>
+        </form>
         <ul class="navbar-nav ms-auto" >
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url 'padre' %}">Home</a>
           </li>
+          {% if user.is_admin %}
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Ingreso de productos</a>
+            <a class="nav-link active" aria-current="page" href="{% url 'cargar' %}">Carga de Productos</a>
           </li>
+          {% endif %}
 
 
 
@@ -53,34 +72,84 @@
       </div>
     </div>
   </nav>
-  <div >
-    {% for p in product %}
-      <div class="container-product">
-
-        <div class="producto">
-          {% if p.detail_image %}
-          <img src="{{ p.detail_image.url }}" alt="Image product">
-          {% endif %}
-          <div>
-            <h5>{{p.nombre | capfirst}}</h5>
-          </div>
-  
-
-        </div>
-      
-
-      </div>
-    {% endfor %}
-
-  </div>
-  <div>
+   <div>
     {% block content %}
 
     {% endblock %}
+   </div>
   
+  <div class="productos"  >
+      <div class="container-product">
+        {% for p in product %}
+        <section class="contenido">
+          <div class="mostrador" id="mostrador">
+              <div class="fila">
+                
+               <div class="item" >
+                  
+                   <div class="contenedor-foto">
+                      <img src="{{ p.detail_image.url }}" alt="">
+                    </div>
+                      <p class="descripcion">{{p.nombre}}</p>
+                     <span class="precio">Precio:{{p.precio}}$</span>
+                     <a data-product="{{p.id}}"  data-action="add" class="btn btn-primary update-cart">Agregar al carrito</a>
+                     
+                     <a  class="btn btn-primary" role="button" href="{% url 'carti' p.id %}">DETALLES</a>
+                     {% if user.is_admin %}
+                     <a  class="btn btn-primary" role="button" href="{% url 'modify' p.id %}">MODIFICAR</a>
+                     {% endif %}
+                  </div>
+                  
+                    
+                </div>
+              </div>    
+        </section> 
+        {% endfor %}
+        
+      </div>
+    
+    
+     <!-- CONTENEDOR DEL ITEM SELECCIONADO -->
+          
 
   </div>
+
+  <footer id="footer" class="footer">
+    <div class="info">
+        <h3>Contacto</h3>
+        <p>Dirección: [Dirección del supermercado]</p>
+        <p>Teléfono: [Número de contacto]</p>
+        <p>Email: [Correo electrónico de contacto]</p>
+    </div>
+    <div class="horario">
+        <h3>Horario de Atención</h3>
+        <p>Lunes a Viernes: 8am - 10pm</p>
+        <p>Sábados y Domingos: 9am - 9pm</p>
+    </div>
+    <div class="redes-sociales">
+        <h3>Síguenos en Redes Sociales</h3>
+        <a href="#">Facebook</a>
+        <a href="https://twitter.com/Pierinicolas_">Twitter</a>
+        <a href="https://www.instagram.com/pierinicolas/">Instagram</a>
+        <div class="container"style="margin: 40px 0 0 40px;">
+          <audio controls >
+            <source src="/media/audios/Lagrimas.mp3" type="audio/mpeg">
+            </audio>
+
+        </div>
+    </div>
+  </footer>
+  <script>
+  document.querySelector('a[href="#footer"]').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('footer').scrollIntoView({
+          behavior: 'smooth'
+      });
+  });
+ </script>
+
   <script rel="stylesheet" src="{% static 'javas/script.js' %}"></script>
+  <script rel="stylesheet" src="{% static 'javas/cart.js' %}"></script>
 </body>
 
 

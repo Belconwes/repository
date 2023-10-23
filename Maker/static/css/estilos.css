@@ -7,7 +7,7 @@
 }
 
 body{
-    background-image: url(../static/asets/su.png);
+    background-image: url(../media/products/su.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -174,3 +174,4 @@ main{
         position: relative;
     }
 }
+

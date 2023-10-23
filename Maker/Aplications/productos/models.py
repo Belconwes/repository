@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from Aplications.Usuarios.models import User
 
 # Create your models here.
 class Categoria (models.Model):
@@ -33,6 +34,9 @@ class Producto (models.Model):
     precio = models.DecimalField('Precio ($)', max_digits=10, decimal_places=2, validators=[MinValueValidator(0)])  # Campo decimal (10 digitos incluyendo dec)(2 decimales)
     detail_image = models.ImageField(upload_to='products',null=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField('cantidad', null= True)
+    
+    
     # Relacion entre producto y categoria (De muchos a 1)
     # Para elegir el nombre personalizado desde la vista del administrador de stock
     
@@ -44,4 +48,7 @@ class Producto (models.Model):
     
     def __str__(self):
         return self.id+' - '+self.nombre
+    
+
+
 

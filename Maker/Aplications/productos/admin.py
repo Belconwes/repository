@@ -17,4 +17,5 @@ class ProductoAdmin (admin.ModelAdmin):
     list_editable = ['precio']
 
 admin.site.register(Producto,ProductoAdmin)
+
 admin.site.register(Categoria)

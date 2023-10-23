@@ -22,9 +22,16 @@ INSTALLED_APPS = [
     'Aplications.Usuarios',
     'Aplications.departamentos',
     'Aplications.productos',
+    'Aplications.carrito',
+    'Aplications.pedido',
+    'crispy_forms',
+    'crispy_bootstrap5',
+
+
     
 ]
-
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 AUTH_USER_MODEL = 'Usuarios.User'
 
 
@@ -51,6 +58,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                 'django.template.context_processors.media',
             ],
         },
     },

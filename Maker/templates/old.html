@@ -7,11 +7,12 @@
 </head>
 <body>
     <h1>
-        {{form.as_p}}
+        Prueba
 
     </h1>
-    <button>
-        ENTER
-    </button>
+    <form action="/send_mail/" method="POST">
+        {% csrf_token %}
+        <button>ENTER</button>
+    </form>
 </body>
 </html>

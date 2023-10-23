@@ -18,7 +18,9 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from Aplications.Usuarios.views import prueba,User_regist,home,log_out,init
+from Aplications.productos.views import cart,modify_p,carga_p
+from Aplications.Usuarios.views import prueba,User_regist,home,log_out,init,proba,tomail,carta
+from Aplications.carrito.views import int,updateItem,carrito
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('lost/',prueba),
@@ -26,7 +28,19 @@ urlpatterns = [
     path('registro/',User_regist,name='registro'),
     path('logout/',log_out,name='logout'),
     path('inicio/',init,name='inicio'),
+    path('send/', proba,name='send'),
+    path('send_mail/', tomail ,name='send_mail'),
+    path('carti/<id>/', cart,name='carti'),
+    path('modify/<id>/', modify_p, name='modify'),
+    path('cargar/',carga_p,name='cargar'),
+    path('sub/',int ,name= 'sub'),
+    path('update_item/',carrito,name='update_item'),
+    path('card/',carta,name='card')
+    
 ]
 
+from django.conf import settings
+
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root =settings.MEDIA_ROOT)
+    from django.conf.urls.static import static
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

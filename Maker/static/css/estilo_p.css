@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;800&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans';
+}
+.contenedor{
+    background-color: #010101;
+    padding: 35px;
+    display: flex;
+    justify-content: center;
+}
+.container-product{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+.contenido{
+    max-width: 1200px;
+    width: 100%;
+    margin: 35px auto;
+    display: flex;
+    justify-items: auto;
+}
+.mostrador{
+    width: 100%;
+    min-height: 100vh;
+    transition: .5s ease;
+}
+.mostrador .fila{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.mostrador .fila .item{
+    max-width: 210px;
+    padding: 30px;
+    height: 250px;
+    /*border: 2px solid red;*/
+    text-align: center;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 7px;
+    transition: .3s;
+}
+.mostrador .fila .item:hover{
+    background-color: #53e662;
+    
+    
+
+}
+
+.mostrador .fila .item img{
+    width: 100%;
+    margin: 35px 0;
+}
+.mostrador .fila .item .descripcion{
+    color: #0b0a0a;
+    font-weight: bold;
+}
+.mostrador .fila .item .precio{
+    color: #100f0f;
+    font-weight: bold;
+    font-size: 20px;
+}
+.seleccion{
+    transition: .5s ease;
+    opacity: 0;
+    width: 0%;
+    border: 1px solid #ccc;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+}
+
