@@ -33,7 +33,7 @@ class Producto (models.Model):
     descripcion = models.TextField('Descripción')  # Campo de texto largo
     precio = models.DecimalField('Precio ($)', max_digits=10, decimal_places=2, validators=[MinValueValidator(0)])  # Campo decimal (10 digitos incluyendo dec)(2 decimales)
     detail_image = models.ImageField(upload_to='products',null=True)
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE,related_name='productos')
     cantidad = models.PositiveIntegerField('cantidad', null= True)
     
     

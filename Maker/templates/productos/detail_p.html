@@ -1,10 +1,5 @@
 {% extends 'Main.html'%}
 
-
-    
-
-
-
 {% block content %}
 <head>
 
@@ -49,11 +44,13 @@
             <div class="col-md-7 order-md-2">
                 <h2>{{m.nombre}}</h2>
                 <input type="hidden" name="token" value="026a8089ff9ce1c296464138aad4080fe96bd25e">
+                <p><del>$ {{m.precio}}</del></p>
+                <h1 style="color: black;">
+                 ${{m.precio}} 
+                 <small class=" text-success">descuento del 5%</small>
+                </h1>
 
                 
-                    <p><del>$ {{m.precio}}</del></p>
-                    <h2>$ {{m.precio}} <small class=" text-success"></small></h2>
-
                 
                 <p class="lead">{{m.descripcion}}</p>
           
@@ -64,7 +61,7 @@
 
                 <div class="d-grid gap-3 col-7">
                     <button class="btn btn-primary" type="button">Comprar ahora</button>
-                    <button class="btn btn-outline-primary" type="button" onclick="addProducto(1, cantidad.value, '026a8089ff9ce1c296464138aad4080fe96bd25e')">Agregar al carrito</button>
+                    <button class="btn btn-outline-primary" data-product="{{producto.id}}"  data-action="add" class="btn btn-primary update-cart" >Agregar al carrito</button>
                 </div>
             </div>
         </div>

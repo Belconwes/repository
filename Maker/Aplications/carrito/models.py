@@ -1,6 +1,7 @@
 from django.db import models
 from Aplications.Usuarios.models import User
 from Aplications.productos.models import Producto
+from Aplications.pedido.models import Pedido
 
 # Create your models here.
 
@@ -23,7 +24,8 @@ class Carrito (models.Model):
     
     
 class CarritoProducto (models.Model):
-    id_carrito = models.ForeignKey (Carrito, on_delete=models.CASCADE)
+    id_carrito = models.ForeignKey (Carrito, on_delete=models.CASCADE,related_name='items')
+    id_pedido = models.ForeignKey(Pedido,on_delete=models.CASCADE,null=True)
     id_producto = models.ForeignKey (Producto, on_delete=models.CASCADE)
     cantidad = models.PositiveBigIntegerField ('Cantidad', default=1)
     estado = models.BooleanField ('Estado activo', default=True)

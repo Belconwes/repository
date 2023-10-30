@@ -1,20 +1,34 @@
 {% extends 'Main.html' %}
 {% block content %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
-    {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load crispy_forms_tags %}
     <title>Modificar</title>
+    <style>
+        html {
+   --s: 120px; /* control the size */
+   --c1: #4E395D;
+   --c2: #8EBE94;
+  
+   --_g:var(--c1) 15%,var(--c2) 0 28%,#0000 0 72%,var(--c2) 0 85%,var(--c1) 0;
+   background:
+    conic-gradient(from 90deg at 2px 2px,#0000 25%,var(--c1) 0) -1px -1px,
+    linear-gradient(-45deg,var(--_g)),linear-gradient(45deg,var(--_g)),
+    conic-gradient(from 90deg at 40% 40%,var(--c1) 25%,var(--c2) 0) 
+     calc(var(--s)/-5) calc(var(--s)/-5);
+   background-size: var(--s) var(--s);
+}
+    </style>
 </head>
-<body style="background-color: darkgreen;">
+<body>
     <h1>MODIFICAR ITEM</h1>
     <main class="container">
         <div class="row">
             <h1> {{error}} </h1>
-            <form  action="" enctype="multipart/form-data" method="POST">
+            <form style="background-color: rgba(42, 218, 100, 0.856);" action="" enctype="multipart/form-data" method="POST">
         
                 {% csrf_token %}
                 {{form|crispy}}

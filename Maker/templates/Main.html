@@ -3,12 +3,34 @@
   {% load static %}
 <head>
     <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
     <title> main </title>
     <Link rel="stylesheet"  href= "{% static 'css/estilos.css' %}">
+    <Link rel="stylesheet"  href= "{% static 'css/navbar.css' %}">
     <link  rel="stylesheet"  href="{% static 'css/register.css' %}" media="all" >
     <Link rel="stylesheet"  href= "{% static 'css/estilo_p.css' %}">
     <link rel="stylesheet" href="{% static 'css/pro.css' %}">
     <link rel="stylesheet" href="{% static 'css/style_m.css' %}">
+    <script src="https://kit.fontawesome.com/deecb3ce02.js" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      var user = '{{request.user}}'
+
+      function getToken(name) {
+          let cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              const cookies = document.cookie.split(';');
+              for (let i = 0; i < cookies.length; i++) {
+                  const cookie = cookies[i].trim();
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+      const csrftoken = getToken('csrftoken');
+  </script>
   
   <style>
   
@@ -23,96 +45,103 @@
 </head>
 
 <body class="truck">
-  <nav class="navbar navbar-expand-lg " style="background-color: rgba(42, 218, 100, 0.856);">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">TRUE MAKER</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="BUSCAR PRODUCTOS" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit" >Search</button>
-        </form>
-        <ul class="navbar-nav ms-auto" >
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'padre' %}">Home</a>
-          </li>
-          {% if user.is_admin %}
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'cargar' %}">Carga de Productos</a>
-          </li>
-          {% endif %}
-
-
-
-          {% if user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link " href="http://127.0.0.1:8000/logout">Cerrar session</a>
-          </li>
+  <header class="header">
+    <nav class="navbar">
+        <div class="logo">"NSS"</div>
+        <div class="search">
+            <form class="d-flex" action="{% url 'buscar' %}" method="GET" role="search">
+                <input class="form-control me-2" type="search" name="texto" id="texto" placeholder="BUSCAR PRODUCTOS" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit" >Search</button>
+             </form>
+            
+        </div>
+        <div class="carrito">
+          <a role="button" class="btn btn-success mr-3" href="{% url 'cart' %}">
+            <i class="fas fa-shopping-cart"></i>
+        </a>
+        </div>
+    </nav>
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li class="nav-item">
+             <a class="nav-link active" aria-current="page" href="{% url 'padre' %}">Home</a>
+           </li>
+            <li><a href="#ofertas">Ofertas</a></li>
+            <li><a href="#footer">Contacto</a></li>
+            {% if user.is_authenticated %}
+           <li class="nav-item">
+             <a class="nav-link " href="http://127.0.0.1:8000/logout">Cerrar session</a>
+           </li>
           {% else %}
           <li class="nav-item">
             <a class="nav-link" href="http://127.0.0.1:8000/registro">Registrarse/Inicar</a>
           </li>
-
-
           {% endif %}
+            
+            {% if user.is_admin %}
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'cargar' %}">Carga de Productos</a>
+            </li>
+            {% endif %}
+            {% if user.is_superuser %}
 
-          {% if user.is_superuser %}
-
-          <li class="nav-item">
-            <a class="nav-link " href="http://127.0.0.1:8000/admin">padmin</a>
-          </li>
-
-          {% endif %}
-
-
-         
+            <li class="nav-item">
+              <a class="nav-link " href="http://127.0.0.1:8000/admin">padmin</a>
+            </li>
+  
+            {% endif %}
+            
         </ul>
-      </div>
-    </div>
-  </nav>
+    </nav>
+    <section class="departamentos">
+      <h2 style="color: black;" >Categorías</h2>
+      <ul>
+         {% for categoria in cata %}
+
+          <li><a href="{% url 'search' categoria.id %}">{{categoria.sigla}}</a></li>
+
+          {% endfor %}
+          <!-- Agrega más departamentos según lo necesites -->
+      </ul>
+    </section>
+</header>
    <div>
     {% block content %}
 
     {% endblock %}
    </div>
+    <!-- Titulo -->
+
+    <!-- Productos -->
+    
+      <div class="productos">
+        {% for producto in product %}
+          <div class="cards">
+                      <!-- src="https://picsum.photos/200/200?random={{ forloop.counter }}" -->
+                      <img 
+                      class="card-img-top mx-auto"
+                      src="{{producto.detail_image.url}}"
+                      alt="{{producto.nombre}}"
+                      >
+                      <div class="card-body text-center">
+                          <h4 class="card-title">{{ producto.nombre.title|truncatechars:30 }}</h4>
+                          <p class="card-text ">{{ producto.descripcion.capitalize|truncatechars:50 }}</p>
+                          <a  class="btn btn-primary" role="button" href="{% url 'carti' producto.id %}">DETALLES</a>
+                          <a data-product="{{producto.id}}"  data-action="add" class="btn btn-primary update-cart">Agregar al carrito</a>
   
-  <div class="productos"  >
-      <div class="container-product">
-        {% for p in product %}
-        <section class="contenido">
-          <div class="mostrador" id="mostrador">
-              <div class="fila">
-                
-               <div class="item" >
-                  
-                   <div class="contenedor-foto">
-                      <img src="{{ p.detail_image.url }}" alt="">
-                    </div>
-                      <p class="descripcion">{{p.nombre}}</p>
-                     <span class="precio">Precio:{{p.precio}}$</span>
-                     <a data-product="{{p.id}}"  data-action="add" class="btn btn-primary update-cart">Agregar al carrito</a>
-                     
-                     <a  class="btn btn-primary" role="button" href="{% url 'carti' p.id %}">DETALLES</a>
-                     {% if user.is_admin %}
-                     <a  class="btn btn-primary" role="button" href="{% url 'modify' p.id %}">MODIFICAR</a>
-                     {% endif %}
-                  </div>
-                  
-                    
-                </div>
-              </div>    
-        </section> 
-        {% endfor %}
-        
+                          {% if user.is_admin %}
+                              <a href="{% url 'modify' producto.id %}" class="btn btn-outline-secondary btn-block">Editar</a>
+                              <a href="{% url 'eliminar' producto.id %}" class="btn btn-outline-danger btn-block">Eliminar</a>
+                          {% endif %}
+                          
+                      </div>
+            </div>
+            {% endfor %}
+           
       </div>
     
-    
-     <!-- CONTENEDOR DEL ITEM SELECCIONADO -->
-          
-
-  </div>
+   
+   
 
   <footer id="footer" class="footer">
     <div class="info">
@@ -147,8 +176,9 @@
       });
   });
  </script>
-
-  <script rel="stylesheet" src="{% static 'javas/script.js' %}"></script>
+ <script type="text/javascript">
+    var user = '{{request.user}}'
+ </script>
   <script rel="stylesheet" src="{% static 'javas/cart.js' %}"></script>
 </body>
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from Aplications.productos.models import Producto
+from Aplications.productos.models import Producto,Categoria
 from Aplications.Usuarios.views import home
 from .forms import Producto_f
 
@@ -51,6 +51,45 @@ def modify_p(request,id):
                 return redirect(to='padre')
     except ValueError as e:
         print(e)
-            
         
+def search(request):
+    text_search = request.GET['texto']
+    products_to_name = Producto.objects.filter(nombre__icontains=text_search).all()
+    products_to_descripcion = Producto.objects.filter(descripcion__icontains=text_search).all() 
+    products = products_to_name | products_to_descripcion
+    return render(request,'productos/search.html',
+    {
+                      
+        'categorias' : Categoria.objects.all(),
+        'productos' : products,
+        'texto_buscado' : text_search,
+        'titulo_seccion' : 'Productos que contienen',
+        'sin_productos': 'No hay producto de la categoria ' + text_search
+    })           
+    
+
+def search_c(request,categoria_id):
+    cata = get_object_or_404(Categoria,id = categoria_id)
+    product = cata.productos.all()
+    return render(request, 'productos/search.html',
+    {
+        'categorias' : Categoria.objects.all(),
+        'productos' : product,
+        'categoria' : cata.nombre,
+        'titulo_seccion' : 'Productos de la categoria',
+        'sin_productos' : 'No hay producto de la categoria ' + cata.sigla
+    })
+
+       
+                 
+            
+
+
+def delete_p(request,id):
+    try:
+        producto = get_object_or_404(Producto,id = id)
+        producto.delete()
+        return redirect(to='padre')
+    except ValueError as i:
+        print(i)
 # Create your views here.

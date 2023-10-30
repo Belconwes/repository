@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import User
-from Aplications.productos.models import Producto
+from Aplications.productos.models import Producto,Categoria
 from .forms import Userform,Authformi
 from django.contrib.auth import login, logout,authenticate
 from django.db import IntegrityError
@@ -16,14 +16,15 @@ def prueba(request):
     return render (request,'Main.html',{'form': tabla})
 
 def home(request):
+    category = Categoria.objects.all()
     products = Producto.objects.all()
     if request.method == 'POST':
         
         
-        return render(request,'Main.html',{'product':products},id)
+        return render(request,'Main.html',{'product':products,'cata' : category},id)
     else:
          
-        return render(request,'Main.html',{'product':products})
+        return render(request,'Main.html',{'product':products,'cata' : category})
 
 
 def User_regist(request):

@@ -18,9 +18,9 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from Aplications.productos.views import cart,modify_p,carga_p
+from Aplications.productos.views import cart,modify_p,carga_p,search,delete_p,search_c
 from Aplications.Usuarios.views import prueba,User_regist,home,log_out,init,proba,tomail,carta
-from Aplications.carrito.views import int,updateItem,carrito
+from Aplications.carrito.views import int,updateItem,carrito,carrito_clean,carrito_delete
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('lost/',prueba),
@@ -32,10 +32,16 @@ urlpatterns = [
     path('send_mail/', tomail ,name='send_mail'),
     path('carti/<id>/', cart,name='carti'),
     path('modify/<id>/', modify_p, name='modify'),
+    path('eliminar/<id>/',delete_p,name='eliminar'),
     path('cargar/',carga_p,name='cargar'),
+    path('buscar/',search,name='buscar'),
     path('sub/',int ,name= 'sub'),
-    path('update_item/',carrito,name='update_item'),
-    path('card/',carta,name='card')
+    path('cart/',carrito,name='cart'),
+    path('update_item/',updateItem,name='update_item'),
+    path('clear/',carrito_clean,name='clear'),
+    path('del/<id>',carrito_delete,name='del'),
+    path('card/',carta,name='card'),
+    path('search/<categoria_id>/', search_c,name='search'),
     
 ]
 
